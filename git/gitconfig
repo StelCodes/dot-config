@@ -1,0 +1,6 @@
+# This is Git's per-user configuration file.
+# Symlink to ~/.gitconfig
+[user]
+# Please adapt and uncomment the following lines:
+name = Stel Abrego
+email = stelabrego@icloud.com
