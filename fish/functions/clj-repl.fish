@@ -1,0 +1,4 @@
+# Defined in - @ line 1
+function clj-repl --wraps=clj\ -Sdeps\ \'\{:deps\ \{nrepl\ \{:mvn/version\ 0.7.0\}\ cider/cider-nrepl\ \{:mvn/version\ 0.25.2\}\}\}\'\ \ \ \ \ -m\ nrepl.cmdline\ \ \ \ \ --middleware\ \'\[cider.nrepl/cider-middleware\]\'\ \ \ \ \ --interactive --wraps=clj\ -Sdeps\ \'\{:deps\ \{nrepl\ \{:mvn/version\ \"0.7.0\"\}\ cider/cider-nrepl\ \{:mvn/version\ \"0.25.2\"\}\}\}\'\ -m\ nrepl.cmdline\ --middleware\ \'\[\"cider.nrepl/cider-middleware\"\]\'\ --interactive --description alias\ clj-repl\ clj\ -Sdeps\ \'\{:deps\ \{nrepl\ \{:mvn/version\ \"0.7.0\"\}\ cider/cider-nrepl\ \{:mvn/version\ \"0.25.2\"\}\}\}\'\ -m\ nrepl.cmdline\ --middleware\ \'\[\"cider.nrepl/cider-middleware\"\]\'\ --interactive
+  clj -Sdeps '{:deps {nrepl {:mvn/version "0.7.0"} cider/cider-nrepl {:mvn/version "0.25.2"}}}' -m nrepl.cmdline --middleware '["cider.nrepl/cider-middleware"]' --interactive $argv;
+end
