@@ -20,6 +20,7 @@ Plug 'kovisoft/paredit'
 "Plug 'venantius/vim-eastwood', { 'for': 'clojure' }
 Plug 'clojure-vim/vim-jack-in'
 Plug 'Olical/conjure', {'tag': 'v4.7.0'}
+Plug 'dag/vim-fish'
 call plug#end()
 
 tnoremap <Esc> <C-\><C-n>
