@@ -3,7 +3,7 @@
 "source ~/.vimrc
 
 call plug#begin('~/.config/nvim/plugged')
-Plug 'stelabrego/hydrangea-vim'
+Plug 'stelcodes/hydrangea-vim'
 Plug 'itchyny/lightline.vim'
 Plug 'preservim/nerdtree', { 'on':  'NERDTreeToggle' }
 "Plug 'scrooloose/syntastic'
