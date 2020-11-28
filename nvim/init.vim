@@ -16,7 +16,7 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
 "Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 "Plug 'tpope/vim-salve', { 'for': 'clojure' }
-Plug 'kovisoft/paredit'
+Plug 'stelcodes/paredit'
 "Plug 'venantius/vim-eastwood', { 'for': 'clojure' }
 Plug 'clojure-vim/vim-jack-in'
 Plug 'Olical/conjure', {'tag': 'v4.7.0'}
