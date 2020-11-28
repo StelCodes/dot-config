@@ -26,6 +26,22 @@ call plug#end()
 tnoremap <Esc> <C-\><C-n>
 set undofile
 let g:auto_save = 1  " enable AutoSave on Vim startup
+
+function! MoveLeft()
+  if (winnr() == winnr('1h'))
+    :tabprevious
+  else
+    :call nvim_input("<Esc><C-w>h")
+  endif
+endfunction
+
+function! MoveRight()
+  if (winnr() == winnr('1l'))
+    :tabnext
+  else
+    :call nvim_input("<Esc><C-w>l")
+  endif
+endfunction
 "========================================================================================
 "see https://github.com/ChristianChiarulli/nvim
 set iskeyword+=-                      	" treat dash separated words as a word text object"
@@ -84,9 +100,9 @@ autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 " Random Useful Functions
 
-" Turn spellcheck on for markdown files
+" Turn wrap on for markdown files
 augroup auto_spellcheck
-  autocmd BufNewFile,BufRead *.md setlocal spell
+  autocmd BufNewFile,BufRead *.md setlocal wrap
 augroup END
 
 nnoremap <f10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
@@ -103,28 +119,26 @@ nnoremap <Space> <Nop>
 vnoremap < <gv
 vnoremap > >gv
 
-" I hate escape more than anything else
-inoremap jk <Esc>
-inoremap kj <Esc>
-
 " Better window navigation
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
-" Custom better tab navigation
-nnoremap <C-h> :tabprevious<CR>
-nnoremap <C-l> :tabnext<CR>
+nnoremap <C-h> :call MoveLeft()<CR>
+nnoremap <C-l> :call MoveRight()<CR>
 
-" Better window navigation
+inoremap <C-j> <Esc><C-w>j
+inoremap <C-k> <Esc><C-w>k
+inoremap <C-h> <Esc>:call MoveLeft()<CR>
+inoremap <C-l> <Esc>:call MoveRight()<CR>
+
 tnoremap <C-j> <C-\><C-n><C-w>j
 tnoremap <C-k> <C-\><C-n><C-w>k
-" Custom better tab navigation
-tnoremap <C-h> <C-\><C-n>:tabprevious<CR>
-tnoremap <C-l> <C-\><C-n>:tabnext<CR>
+tnoremap <C-h> <C-\><C-n>:call MoveLeft()<CR>
+tnoremap <C-l> <C-\><C-n>:call MoveRight()<CR>
 
 " TAB in general mode will move to text buffer
-nnoremap <silent> <TAB> :bnext<CR>
+nnoremap <silent> <TAB> 10j
 " SHIFT-TAB will go back
-nnoremap <silent> <S-TAB> :bprevious<CR>
+nnoremap <silent> <S-TAB> 10k
 
 " Move selected line / block of text in visual mode
 " shift + k to move up
@@ -169,10 +183,10 @@ endfunction
 map <C-n> :NERDTreeToggle<CR>
 colorscheme hydrangea
 set splitbelow
-nnoremap <C-w> :q<CR>
-nnoremap <C-q> :qa<CR>
+nnoremap <C-q> :q<CR>
 nnoremap <C-t> :tabnew<CR>:terminal<CR>
 nnoremap <C-s> :source %<CR>
+nnoremap <C-d> :cd %:h<CR>
 set linebreak
 nnoremap <CR> G
 " this makes it so vim will update a buffer if it has changed
