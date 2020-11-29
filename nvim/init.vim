@@ -21,8 +21,13 @@ Plug 'stelcodes/paredit'
 Plug 'clojure-vim/vim-jack-in'
 Plug 'Olical/conjure', {'tag': 'v4.7.0'}
 Plug 'dag/vim-fish'
+Plug 'ap/vim-css-color'
+Plug 'godlygeek/tabular'
+Plug 'airblade/vim-gitgutter'
+Plug 'dense-analysis/ale'
 call plug#end()
 
+let g:ale_linters = {'clojure': ['clj-kondo']}
 tnoremap <Esc> <C-\><C-n>
 set undofile
 let g:auto_save = 1  " enable AutoSave on Vim startup
@@ -81,27 +86,10 @@ set updatetime=300                      " Faster completion
 set timeoutlen=100                      " By default timeoutlen is 1000 ms
 set clipboard=unnamedplus               " Copy paste between vim and everything else
 set incsearch
-
-" " New stuff
 set notimeout nottimeout
-" set scrolloff=1
-" set sidescroll=1
-" set sidescrolloff=1
-" set display+=lastline
-" set backspace=eol,start,indent
-" set nostartofline
-" let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-" set mmp=1300
-" set autochdir                           " Your working directory will always be the same as your working directory
-" set foldcolumn=2                        " Folding abilities
+set termguicolors                       " enable full color support
 
-" au! BufWritePost $MYVIMRC source %      " auto source when writing to init.vm alternatively you can run :source $MYVIMRC
-autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o 
-
-" Random Useful Functions
-
-" Turn wrap on for markdown files
-augroup auto_spellcheck
+augroup auto_wrap
   autocmd BufNewFile,BufRead *.md setlocal wrap
 augroup END
 
@@ -150,9 +138,6 @@ xnoremap J :move '>+1<CR>gv-gv
 nnoremap <leader>n    :resize -6<CR>
 nnoremap <leader>m    :resize +6<CR>
 
-" Better nav for omnicomplete
-inoremap <expr> <c-j> ("\<C-n>")
-inoremap <expr> <c-k> ("\<C-p>")
 " <TAB>: completion.
 inoremap <silent> <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 "========================================================================================
@@ -166,12 +151,17 @@ let g:lightline = {
       \ },
       \ 'component': {
       \   'readonly': '%{&readonly?"":""}',
+      \   'obsession': '%{ObsessionStatus("☠️ ")}'
       \ },
       \ 'component_function': {
-      \   'gitbranch': 'LightlineFugitive'
+      \   'gitbranch': 'LightlineFugitive',
       \ },
       \ 'separator':    { 'left': '', 'right': '' },
       \ 'subseparator': { 'left': '', 'right': '' },
+      \ 'tabline': {
+      \   'left': [['tabs']],
+      \   'right': [['obsession']]
+      \ }
       \ }
 function! LightlineFugitive()
     if exists('*FugitiveHead')
@@ -196,3 +186,4 @@ au FocusGained,BufEnter * :checktime
 autocmd FileType c,cpp,cs,java setlocal commentstring=//\ %s "change comment style for commentary.vim
 nnoremap <leader>/ :let @/=""<CR>
 let g:paredit_smartjump=1
+
