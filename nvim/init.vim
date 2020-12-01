@@ -186,4 +186,4 @@ au FocusGained,BufEnter * :checktime
 autocmd FileType c,cpp,cs,java setlocal commentstring=//\ %s "change comment style for commentary.vim
 nnoremap <leader>/ :let @/=""<CR>
 let g:paredit_smartjump=1
-
+set icm=split
