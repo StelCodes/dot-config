@@ -47,6 +47,11 @@ function! MoveRight()
     :call nvim_input("<Esc><C-w>l")
   endif
 endfunction
+
+function! StartSubstitution()
+  :call nvim_input(":%s/<C-r>\"/")
+endfunction
+
 "========================================================================================
 "see https://github.com/ChristianChiarulli/nvim
 set iskeyword+=-                      	" treat dash separated words as a word text object"
@@ -187,3 +192,7 @@ autocmd FileType c,cpp,cs,java setlocal commentstring=//\ %s "change comment sty
 nnoremap <leader>/ :let @/=""<CR>
 let g:paredit_smartjump=1
 set icm=split
+set nolazyredraw "supposedly fixed UI redraw bug when switching focus back to fullscreen nvim
+xnoremap <leader> <Nop>
+nnoremap <leader>r :call StartSubstitution()<CR>
+
