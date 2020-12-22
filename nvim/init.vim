@@ -49,7 +49,7 @@ function! MoveRight()
 endfunction
 
 function! StartSubstitution()
-  :call nvim_input(":%s/<C-r>\"/")
+  call nvim_input(":%s/<C-r>\"//gc<left><left><left>")
 endfunction
 
 "========================================================================================
@@ -194,5 +194,6 @@ let g:paredit_smartjump=1
 set icm=split
 set nolazyredraw "supposedly fixed UI redraw bug when switching focus back to fullscreen nvim
 xnoremap <leader> <Nop>
-nnoremap <leader>r :call StartSubstitution()<CR>
+nnoremap <leader>y viwy
+nnoremap <leader>u :call StartSubstitution()<CR>
 
