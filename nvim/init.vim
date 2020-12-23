@@ -1,12 +1,18 @@
-"set runtaimepath^=~/.vim runtimepath+=~/.vim/after
-"let &packpath = &runtimepath
-"source ~/.vimrc
+"""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Leader
+
+let mapleader=" "
+let maplocalleader=" "
+nnoremap <Space> <Nop>
+xnoremap <leader> <Nop>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Packages
 
 call plug#begin('~/.config/nvim/plugged')
 Plug 'stelcodes/hydrangea-vim'
 Plug 'itchyny/lightline.vim'
 Plug 'preservim/nerdtree', { 'on':  'NERDTreeToggle' }
-"Plug 'scrooloose/syntastic'
 Plug '907th/vim-auto-save'
 Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-commentary'
@@ -14,24 +20,113 @@ Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
-"Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
-"Plug 'tpope/vim-salve', { 'for': 'clojure' }
 Plug 'stelcodes/paredit'
-"Plug 'venantius/vim-eastwood', { 'for': 'clojure' }
-Plug 'clojure-vim/vim-jack-in'
 Plug 'Olical/conjure', {'tag': 'v4.7.0'}
 Plug 'dag/vim-fish'
 Plug 'ap/vim-css-color'
 Plug 'godlygeek/tabular'
 Plug 'airblade/vim-gitgutter'
 Plug 'dense-analysis/ale'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 call plug#end()
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Ale config
 let g:ale_linters = {'clojure': ['clj-kondo']}
-tnoremap <Esc> <C-\><C-n>
-set undofile
-let g:auto_save = 1  " enable AutoSave on Vim startup
+"""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Autosave config
+let g:auto_save = 1
+"""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Paredit config
+let g:paredit_smartjump=1
+"""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Substitution
 
+" preview pane
+set icm=split
+
+nnoremap <leader>y viwy
+nnoremap <leader>u :call StartSubstitution()<CR>
+
+function! StartSubstitution()
+  call nvim_input(":%s/<C-r>\"//gc<left><left><left>")
+endfunction
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""
+" General Settings
+" see https://github.com/ChristianChiarulli/nvim
+
+" save undo history
+set undofile
+" treat dash separated words as a word text object
+set iskeyword+=-
+" Stop newline continution of comments
+set formatoptions-=cro
+" Required to keep multiple buffers open
+set hidden
+" The encoding displayed
+set encoding=utf-8
+" The encoding written to file
+set fileencoding=utf-8
+" Enable your mouse
+set mouse=a
+" Insert 2 spaces for a tab
+set tabstop=2     
+" Change the number of space characters inserted for indentation
+set shiftwidth=2  
+" Converts tabs to spaces
+set expandtab     
+" Makes indenting smart
+set smartindent   
+" Faster completion
+set updatetime=300
+" Wait forever for mappings
+set notimeout
+" Copy paste between vim and everything else
+set clipboard=unnamedplus     
+""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Visuals
+
+" Display long lines as just one line
+set nowrap
+" Makes popup menu smaller
+set pumheight=10
+" Enables syntax highlighing
+syntax enable
+" Show the cursor position all the time
+set ruler
+" More space for displaying messages
+set cmdheight=2
+" Line numbers
+set number        
+" Enable highlighting of the current line
+set cursorline    
+" tell vim what the background color looks like
+set background=dark
+" Always show tabs
+set showtabline=2 
+" We don't need to see things like -- INSERT -- anymore
+set noshowmode    
+" enable full color support
+set termguicolors 
+" Always show the signcolumn, otherwise it would shift the text each time
+set signcolumn=yes
+"supposedly fixed UI redraw bug when switching focus back to fullscreen nvim
+set nolazyredraw
+" Horizontal splits will automatically be below
+set splitbelow
+" Vertical splits will automatically be to the right
+set splitright
+" Break lines at word boundaries for readability
+set linebreak
+" colorscheme
+colorscheme hydrangea
+"""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Navigating
+
+" stel's original window navigation solution
+" ctrl-[hjkl] moves window focus in that direction, moving to another tab
+" if necessary
 function! MoveLeft()
   if (winnr() == winnr('1h'))
     :tabprevious
@@ -48,71 +143,6 @@ function! MoveRight()
   endif
 endfunction
 
-function! StartSubstitution()
-  call nvim_input(":%s/<C-r>\"//gc<left><left><left>")
-endfunction
-
-"========================================================================================
-"see https://github.com/ChristianChiarulli/nvim
-set iskeyword+=-                      	" treat dash separated words as a word text object"
-set formatoptions-=cro                  " Stop newline continution of comments
-
-syntax enable                           " Enables syntax highlighing
-set hidden                              " Required to keep multiple buffers open multiple buffers
-set nowrap                              " Display long lines as just one line
-set whichwrap+=<,>,[,],h,l
-set encoding=utf-8                      " The encoding displayed
-set pumheight=10                        " Makes popup menu smaller
-set fileencoding=utf-8                  " The encoding written to file
-set ruler              			            " Show the cursor position all the time
-set cmdheight=2                         " More space for displaying messages
-set mouse=a                             " Enable your mouse
-set splitbelow                          " Horizontal splits will automatically be below
-set splitright                          " Vertical splits will automatically be to the right
-set t_Co=256                            " Support 256 colors
-set conceallevel=0                      " So that I can see `` in markdown files
-set tabstop=2                           " Insert 2 spaces for a tab
-set shiftwidth=2                        " Change the number of space characters inserted for indentation
-set smarttab                            " Makes tabbing smarter will realize you have 2 vs 4
-set expandtab                           " Converts tabs to spaces
-set smartindent                         " Makes indenting smart
-set autoindent                          " Good auto indent
-set laststatus=2                        " Always display the status line
-set number                              " Line numbers
-set cursorline                          " Enable highlighting of the current line
-set background=dark                     " tell vim what the background color looks like
-set showtabline=2                       " Always show tabs
-set noshowmode                          " We don't need to see things like -- INSERT -- anymore
-set nobackup                            " This is recommended by coc
-set nowritebackup                       " This is recommended by coc
-set shortmess+=c                        " Don't pass messages to |ins-completion-menu|.
-set signcolumn=yes                      " Always show the signcolumn, otherwise it would shift the text each time
-set updatetime=300                      " Faster completion
-set timeoutlen=100                      " By default timeoutlen is 1000 ms
-set clipboard=unnamedplus               " Copy paste between vim and everything else
-set incsearch
-set notimeout nottimeout
-set termguicolors                       " enable full color support
-
-augroup auto_wrap
-  autocmd BufNewFile,BufRead *.md setlocal wrap
-augroup END
-
-nnoremap <f10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
-\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
-\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<cr>
-
-" Mappings
-
-let mapleader=" "
-let maplocalleader=" "
-nnoremap <Space> <Nop>
-
-" Better indenting
-vnoremap < <gv
-vnoremap > >gv
-
-" Better window navigation
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-h> :call MoveLeft()<CR>
@@ -128,26 +158,41 @@ tnoremap <C-k> <C-\><C-n><C-w>k
 tnoremap <C-h> <C-\><C-n>:call MoveLeft()<CR>
 tnoremap <C-l> <C-\><C-n>:call MoveRight()<CR>
 
-" TAB in general mode will move to text buffer
+" tab moves cursor 10 lines down, shift-tab 10 lines up
 nnoremap <silent> <TAB> 10j
-" SHIFT-TAB will go back
 nnoremap <silent> <S-TAB> 10k
 
-" Move selected line / block of text in visual mode
-" shift + k to move up
-" shift + j to move down
-xnoremap K :move '<-2<CR>gv-gv
-xnoremap J :move '>+1<CR>gv-gv
-
-" Use alt + hjkl to resize windows
-nnoremap <leader>n    :resize -6<CR>
-nnoremap <leader>m    :resize +6<CR>
+"""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Auto complete
 
 " <TAB>: completion.
 inoremap <silent> <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-"========================================================================================
 
-set noshowmode "lightline
+"""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Text manipulation
+
+" Move selected line / block of text in visual mode
+xnoremap K :move '<-2<CR>gv-gv
+xnoremap J :move '>+1<CR>gv-gv
+
+" Keeps selection active when indenting so you can do it multiple times quickly
+vnoremap > >gv
+vnoremap < <gv
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""
+" my personal ctrl prefixed commmands
+nnoremap <C-q> :q<CR>
+nnoremap <C-t> :tabnew<CR>:terminal<CR>
+nnoremap <C-s> :source %<CR>
+nnoremap <C-d> :cd %:h<CR>
+nnoremap <C-n> :NERDTreeToggle<CR>
+nnoremap <C-c> :let @/=""<CR>
+nnoremap <C-v> :resize -3<CR>
+nnoremap <C-b> :resize +3<CR>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""
+" lightline config
+set noshowmode
 let g:lightline = {
       \ 'colorscheme': 'hydrangea',
       \ 'active': {
@@ -175,25 +220,17 @@ function! LightlineFugitive()
     endif
     return ''
 endfunction
-map <C-n> :NERDTreeToggle<CR>
-colorscheme hydrangea
-set splitbelow
-nnoremap <C-q> :q<CR>
-nnoremap <C-t> :tabnew<CR>:terminal<CR>
-nnoremap <C-s> :source %<CR>
-nnoremap <C-d> :cd %:h<CR>
-set linebreak
-nnoremap <CR> G
+"""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Event Triggers
+
 " this makes it so vim will update a buffer if it has changed
 " on the filesystem when a FocusGained or BufEnter event happens
-set autoread
-au FocusGained,BufEnter * :checktime
+autocmd FocusGained,BufEnter * :checktime
 autocmd FileType c,cpp,cs,java setlocal commentstring=//\ %s "change comment style for commentary.vim
-nnoremap <leader>/ :let @/=""<CR>
-let g:paredit_smartjump=1
-set icm=split
-set nolazyredraw "supposedly fixed UI redraw bug when switching focus back to fullscreen nvim
-xnoremap <leader> <Nop>
-nnoremap <leader>y viwy
-nnoremap <leader>u :call StartSubstitution()<CR>
-
+autocmd FileType md setlocal wrap
+"""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Terminal
+tnoremap <Esc> <C-\><C-n>
+"""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Debugging neovim
+nnoremap <f10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<cr>
