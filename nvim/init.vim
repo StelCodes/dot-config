@@ -10,7 +10,7 @@ xnoremap <leader> <Nop>
 " Packages
 
 call plug#begin('~/.config/nvim/plugged')
-Plug 'stelcodes/hydrangea-vim'
+Plug 'stelcodes/neovim-colorscheme-generator'
 Plug 'itchyny/lightline.vim'
 Plug 'preservim/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug '907th/vim-auto-save'
@@ -167,6 +167,9 @@ nnoremap <silent> <S-TAB> 10k
 
 " <TAB>: completion.
 inoremap <silent> <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+" move through wrapped lines visually
+nnoremap j gj
+nnoremap k gk
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""
 " Text manipulation
@@ -183,7 +186,7 @@ vnoremap < <gv
 " my personal ctrl prefixed commmands
 nnoremap <C-q> :q<CR>
 nnoremap <C-t> :tabnew<CR>:terminal<CR>
-nnoremap <C-s> :source %<CR>
+nnoremap <C-s> :source ~/.config/nvim/init.vim<CR>
 nnoremap <C-d> :cd %:h<CR>
 nnoremap <C-n> :NERDTreeToggle<CR>
 nnoremap <C-c> :let @/=""<CR>
@@ -227,7 +230,7 @@ endfunction
 " on the filesystem when a FocusGained or BufEnter event happens
 autocmd FocusGained,BufEnter * :checktime
 autocmd FileType c,cpp,cs,java setlocal commentstring=//\ %s "change comment style for commentary.vim
-autocmd FileType md setlocal wrap
+autocmd FileType markdown setlocal wrap
 """""""""""""""""""""""""""""""""""""""""""""""""""""
 " Terminal
 tnoremap <Esc> <C-\><C-n>
